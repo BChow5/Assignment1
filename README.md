@@ -8,6 +8,8 @@
 
 In this guide, we'll walk through the process of creating a Droplet on DigitalOcean using Cloud-Init, ensuring a smooth and automated setup for your virtual servers!
 
+--- 
+
 ## Getting Started
 
 ### How to create an SSH Key pair
@@ -21,6 +23,7 @@ By default, you should already have the `ssh-keygen` util already installed on y
 ##### This section will teach you how to:
 * Create a .ssh directory
 * Create a SSH key pair
+<br>
 
 #### Create a .ssh directory (If you don't have one)
 
@@ -34,7 +37,7 @@ mkdir $HOME\.ssh
 ```
 
 This will create the `.ssh` folder in your user's home directory (usually `C:\Users\YourUsername\.ssh`).
-
+<br>
 #### Creating the SSH Key Pair
 
 In this section, we will be using the terminal to create two plain text files in the `.ssh` directory that will be our keys. We will create a "do-key" as our private key and "do-key.pub" as our public key.
@@ -45,6 +48,7 @@ In this section, we will be using the terminal to create two plain text files in
 ```bash
 `ssh-keygen -t ed25519 -f C:\Users\your-user-name\.ssh\do-key -C "youremail@email.com"`
 ```
+<br>
 
 ###### Successful key creation will look similar to this:
 
@@ -67,6 +71,7 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
+---
 
 ### How to add your public key to your DigitalOcean account
 
@@ -89,8 +94,11 @@ Once you've created your SSH keys, you will need to add it to our DigitalOcean a
 8. Type a name for your SSH key in the **Key Name** text box
 ###### NOTE: It's important to name your keys appropriately to distinguish between multiple keys.
 9. Click **Add SSH Key** to finish
+<br>
 
 You have now added your key and it will automatically be copied to your next created droplet!
+
+---
 
 ### How to Create a Droplet on DigitalOcean
 
@@ -99,10 +107,11 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 ##### This section will teach you how to:
 * Upload an Arch Linux Image to DigitalOcean
 * Create a new Arch Linux Droplet
+<br>
 
 #### Upload an image to DigitalOcean
 
-You will be uploading the provided Arch Linux image to Digital Ocean for your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. This disk image will be the basis for the droplet to be built with.
+You will be uploading the provided Arch Linux disk image to Digital Ocean as the basis to build your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. 
 
 You can find the Arch Linux image in the Assets folder. 
 
@@ -110,13 +119,14 @@ You can find the Arch Linux image in the Assets folder.
 2. Select **Backups & Snapshots**
 3. Select **Custom Images** 
 4. Click the blue **Upload Image** button. 
-5. Upload the Arch Linux image in the provided Assets folder
+5. Upload the Arch Linux image from the provided Assets folder
 
 ###### NOTE: After clicking upload, a new settings box will open and you will need to select the following settings
 
 6. Select **Arch Linux** in the Distribution dropdown menu
-7. Select **San Francisco 3** in the Choose a datacenter region section
+7. Select **San Francisco 3** in the Choose a Datacenter Region section
 8. Click **Upload Image** to finish
+<br>
 
 #### Create a new Arch Linux Droplet
 
@@ -133,8 +143,8 @@ You can find the Arch Linux image in the Assets folder.
 
 ![Image of choosing the Arch Linux image](\Assets\Images\arch_linux.png)
 
-8. Select **Basic** for Choose Size
-9. Select the **$7/mo Premium AMD CPU**
+8. Select **Basic** for Droplet Type
+9. Select the **$7/mo Premium AMD CPU** for CPU Options
 
 ![Image of choosing the options for your droplet settings image](\Assets\Images\droplet_type.png)
 
@@ -146,8 +156,34 @@ You can find the Arch Linux image in the Assets folder.
 
 ![Image of the advanced options in DigitalOcean](\Assets\Images\advanced_options.png)
 
-15. Open the "cloud-init-config.yaml" file provided in the Assets folder
-16. Copy and paste the contents from "cloud-init-config.yaml" into the text box
+15. Open the **cloud-init-config.yaml** file provided in the Assets folder
+16. Copy and paste the contents from **cloud-init-config.yaml** into the text box
+###### NOTE: You will need to change information for name. primary_group, and ssh-authorized keys (ssh-authorize-keys should be changed to your SSH public key that you made earlier)
+
+```bash 
+#cloud-config
+users:
+  - name: student #change me
+    primary_group: student #change me
+    groups: wheel
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-ed25519 your-ssh-public-key # change this
+
+packages:
+  - ripgrep
+  - rsync
+  - neovim
+  - fd
+  - less
+  - man-db
+  - bash-completion
+  - tmux
+
+disable_root: true
+```
+
 17. Type your desired name in the **Host Name** text box
 18. Click **Create Droplet** to finish
 
@@ -157,6 +193,8 @@ You can find the Arch Linux image in the Assets folder.
 
 Congratulations! You've now successfully created your droplet.
 
+---
+
 ### How to Connect to your Droplet Using SSH
 
 You will create a SSH config file to make it easier to connect to your droplet. Without doing this step, you would have to input your droplet's IP address every time you wanted to connect.
@@ -164,7 +202,7 @@ You will create a SSH config file to make it easier to connect to your droplet. 
 #### Create a Config File
 
 1. Open your Terminal
-2. Run the following code:
+2. Copy and run the following code in your terminal:
 ```bash 
 code config
 ```
@@ -185,7 +223,14 @@ Host arch
 
 ![Image of completed droplet](\Assets\Images\completed_droplet.png)
 
-5. Change the **HostName** to the IP address of your droplet
-6. Save the Config file to finish
+5. Change *HostName* to the IP address of your droplet
+###### NOTE: You may need to change other information to match your settings of your droplet and SSH keys
+6. Save the *Config* file to finish
+<br>
+
+##### Example of connecting using SSH:
+```bash
+ssh arch
+```
 
 You're now ready to connect to your droplet using SSH!

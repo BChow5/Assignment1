@@ -64,7 +64,7 @@ This step will be done on [DigitalOcean](https://www.digitalocean.com/) to creat
 
 It's important that the API token has both read and write access. It needs write access to be able to create your droplet, otherwise it would only be able to gather information. 
 
-##### NOTE: The API token string is only displayed once, so be sure to save it in a safe place for late use
+#### NOTE: The API token string is only displayed once, so be sure to save it in a safe place for late use
 
 1. Click **API** on the left side menu
 2. Click the **Generate New Token**
@@ -82,7 +82,8 @@ A New Personal Access Token page will appear and you will need to fill out the 
 ### Use the API Token to Grant Account Access to Doctl
 
 1. Copy and run the following code to connect your API token
-###### NOTE: Be sure to give this authentication a name by changing "NAME"
+
+#### NOTE: Be sure to give this authentication a name by changing "NAME"
 
 ```bash 
 doctl auth init --context NAME
@@ -90,7 +91,8 @@ doctl auth init --context NAME
 
 1. Enter in the API token string (the one you made earlier) when prompted by `doctl auth init`
 2. Copy and run the following code to switch to the correct authenticated account
-###### NOTE: Change "NAME" to the name of the account you want to switch to that appears after `doctl auth list`
+
+#### NOTE: Change "NAME" to the name of the account you want to switch to that appears after `doctl auth list`
 
 ```bash 
 doctl auth list
@@ -105,7 +107,7 @@ doctl auth switch --context NAME
 doctl account get
 ```
 
-###### Successful output looks like this:
+#### Successful output looks like this:
 
 ![Image of doctl validation confirmation](/Assets/Images/doctl_validate.png)
 
@@ -116,13 +118,13 @@ You will now add your SSH keys to your DigitalOcean account using doctl. You wil
 
 1. Copy and run the following code to upload your public key to your DigitalOcean account 
 
-##### Note: You will need to change "git-user" to your desired key name and "hw-key.pub" to your public key file name
+#### Note: You will need to change "git-user" to your desired key name and "hw-key.pub" to your public key file name
 
 ```bash
 doctl compute ssh-key import git-user --public-key-file ~/.ssh/hw-key.pub
 ```
 
-##### NOTE: A successful import will look like this:
+#### NOTE: A successful import will look like this:
 
 ![Image of the public key import to DigitalOcean](/Assets/Images/public_key_upload.png)
 
@@ -135,7 +137,7 @@ cat ~/.ssh/hw-key.pub
 
 This step will be creating our droplet on the [DigitalOcean](https://www.digitalocean.com/) website. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware. Each Droplet you create is a new server you can use, either standalone or as part of a larger, cloud-based infrastructure.
 
-##### This section will teach you how to:
+#### This section will teach you how to:
 
 * Upload an Arch Linux Image to DigitalOcean
 * Create a new Arch Linux Droplet
@@ -152,11 +154,11 @@ You can find the Arch Linux image in the Assets folder.
 4. Click the blue **Upload Image** button.
 5. Upload the Arch Linux image in the provided Assets folder
 
-###### NOTE: After clicking upload, a new settings box will open and you will need to select the following settings
+#### NOTE: After clicking upload, a new settings box will open and you will need to select the following settings
 
 1. Select **Arch Linux** in the Distribution dropdown menu
 2. Select **San Francisco 3** in the Choose a Datacenter Region Section 
--  We choose San Francisco 3 as our data center in the example because it is the closest to our location
+	-  We choose San Francisco 3 as our data center in the example because it is the closest to our location
 3. Click **Upload Image** to finish
 
 ### Setting up cloud-init  
@@ -169,8 +171,9 @@ Cloud-init will allow us to set up a server with some initial configuration.
 nvim cloud-config.yaml
 ```
 
-1. Copy and paste the following code
-###### NOTE: Use "ctrl + shift + v" to paste with the correct formatting 
+2. Copy and paste the following code
+
+#### NOTE: Use "ctrl + shift + v" to paste with the correct formatting 
 
 ```bash 
 #cloud-config
@@ -194,8 +197,8 @@ packages:
 disable_root: true
 ```
 
-1. Press the "i" key after pasting the text to enter insert mode to edit the file contents
-2. Change the information (at least the ssh-authorized-keys)
+3. Press the "i" key after pasting the text to enter insert mode to edit the file contents
+1. Change the information (at least the ssh-authorized-keys)
 3. Press "esc" key to exit inset mode
 4. Type `:` then `wq` and then press enter key to save and finish 
 
@@ -240,4 +243,5 @@ Host arch
 6. Save the Config file to finish
 
 
-You're now ready to connect to your droplet using SSH!
+You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh user-name`
+

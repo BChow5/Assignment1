@@ -10,13 +10,25 @@ In this guide, we'll walk through the process of creating a droplet on DigitalOc
 
 ### Prerequisites 
 - A computer running Arch Linux 
+- Neovim installed on your system
 - The Arch Linux image provided in the Assets folder
 - All code provided should be run through the Terminal
 <br>
 
+## Table of Contents
+1. [How to Create an SSH Key Pair](#How-to-create-an-SSH-key-pair)
+2. [How to Install Doctl](#how-to-install-doctl)
+    1. [Install doctl](#install-doctl)
+    2. [Create an API token](#create-an-api-token)
+    3. [Granting Account Access to Doctl with an API Token](#granting-account-access-to-doctl-with-an-api-token)
+    4. [Validate That Doctl is Working](#validate-that-doctl-is-working)
+3. 
+
+
+
 ***
 
-## How to create an SSH Key pair
+## How to Create an SSH Key pair
 
 For the initial set up, you will begin by creating a Secure Shell Protocol (SSH) key pair using our local machine. SSH (Secure Shell) key pairs are a more secure alternative to traditional password-based authentication by using Public Key Cryptography.
 
@@ -27,6 +39,8 @@ By default, you should already have the `ssh-keygen` util already installed on y
 In this section, we will be using the terminal to create two plain text files in the `.ssh` directory that will be our keys.
 - We will create a "hw-key" as our private key
 - And we will create "hw-key.pub" as our public key
+<br> 
+
 
 1. Copy then run the following code and after changing the appropriate information:
 
@@ -35,10 +49,12 @@ ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 ```
 
 #### NOTE: You will need to change *"youremail@email.com"* to your actual information.
+<br>
 
 #### Successful key creation will look something like this:
 
 ![Image of the SSH key making confirmation](/Assets/Images/SSH_key_make.png)
+<br> 
 
 ***
 ## How to Install Doctl
@@ -48,8 +64,8 @@ ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 #### This section will teach you how to:
 * Install doctl
 * Create an API token
-* Activate the API token
-* Validate doctl
+* Grating Account Access to Doctl with an API Token
+* Validate That Doctl is Working
 <br>
 
 ### Install Doctl
@@ -83,7 +99,7 @@ A New Personal Access Token page will appear and you will need to fill out the 
 5. Save your API token somewhere safe for later use
 <br>
 
-### Use the API Token to Grant Account Access to Doctl
+### Granting Account Access to Doctl with an API Token
 
 1. Copy and run the following code to connect your API token
 
@@ -158,6 +174,7 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 You will be uploading the provided Arch Linux image to Digital Ocean for your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. This disk image will be the basis for the droplet to be built with.
 
 You can find the Arch Linux image in the Assets folder.
+<br>
 
 1. Click the **Manage** dropdown menu in the left side menu 
 2. Select **Backups & Snapshots**
@@ -175,7 +192,8 @@ You can find the Arch Linux image in the Assets folder.
 
 ### Setting up cloud-init  
 
-Cloud-init will allow us to set up a server with some initial configuration. 
+Cloud-init will allow you to set up a server with some initial configuration. For the purpose of thise guide, we've created a template basis that you can use. The selected packages included in this cloud-init configuration are some examples of commonly used packages. 
+<br>
 
 1. Copy and run the following code to create your cloud-config.yaml file
 
@@ -190,7 +208,7 @@ nvim cloud-config.yaml
 ```bash 
 #cloud-config
 users:
-	name: user-name #change me
+    name: user-name #change me
     primary_group: user-group # change me
     groups: wheel
     shell: /bin/bash
@@ -285,3 +303,4 @@ Cloud-init. (n.d.). _Introduction to cloud-init_. Cloud-init. [https://docs.clou
 
 Cloudflare. (n.d.). _What is SSH?_. Cloudflare. [https://www.cloudflare.com/learning/access-management/what-is-ssh/](https://www.cloudflare.com/learning/access-management/what-is-ssh/)
 
+DigitalOcean. (n.d.). DigitalOcean API slugs reference. DigitalOcean. https://slugs.do-api.dev/

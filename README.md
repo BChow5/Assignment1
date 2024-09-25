@@ -245,7 +245,7 @@ Back in your terminal, you will be running the following `doctl` command to crea
 1. Copy and paste the following code into your terminal 
 
 ```bash 
-doctl compute droplet create example-droplet --image 165084633 --size s-1vcpu-1gb-amd --region sfo3 --ssh-keys 43491384 --user-data-file ~/cloud-config.yaml 
+doctl compute droplet create --image 165084633 --size s-1vcpu-1gb-amd --region sfo3 --ssh-keys 43491384 --user-data-file ~/cloud-config.yaml --wait exampleDroplet
 ```
 
 Here is what each part of the command represents:
@@ -266,23 +266,21 @@ Here is what each part of the command represents:
 ## How to Connect to Your Droplet Using SSH
 
 1. Open your Terminal
-2. Run the following code:
-
+2. Run the following code to create a config file:
 ```bash
-doctl compute ssh 447352201 --ssh-key-path ~/.ssh/hw-key --ssh-user user-name
+nvim config
 ```
 
 3. Copy the following code into your new config file
 
 ```bash
 Host arch
-  HostName 24.144.89.149
-  User arch
+  HostName 24.144.89.149 #change IP address to the IP address of your droplet
+  User arch #change "arch" to match your name in your cloud-init.yaml file
   PreferredAuthentications publickey
-  IdentityFile ~/.ssh/hw-key
+  IdentityFile ~/.ssh/hw-key #change "hw-key" to match the name of your private SSH key
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
-
 ```
 
 4. Copy the IP address of the droplet from DigitalOcean

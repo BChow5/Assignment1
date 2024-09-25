@@ -14,13 +14,12 @@ In this guide, we'll walk through the process of creating a Droplet on DigitalOc
 - All code provided should be run through the Terminal
 
 ***
-## Getting Started
 
-### How to create an SSH Key pair
+## How to create an SSH Key pair
 
 For the initial set up, you will begin by creating a Secure Shell Protocol (SSH) key pair using our local machine. SSH (Secure Shell) key pairs are a more secure alternative to traditional password-based authentication by using Public Key Cryptography.
 
-Public Key Cryptography uses a key pair that consists of a public key (which you place on the server) and a private key (which you keep securely on your local machine). With SSH key authentication, there's no need to worry about using weak or compromised passwords. Once set up, you can connect to the Droplet without needing to type a password each time. Instead, your local machine automatically uses the private key to authenticate you.
+Public Key Cryptography uses a key pair that consists of a public key (which you place on the server) and a private key (which you keep securely on your local machine). This file tells the server which public keys are allowed to access the account without a password. With SSH key authentication, there's no need to worry about using weak or compromised passwords. Once set up, you can connect to the Droplet without needing to type a password each time. Instead, your local machine automatically uses the private key to authenticate you.
 
 By default, you should already have the `ssh-keygen` util already installed on your MacOS or Windows machine.
 
@@ -28,10 +27,10 @@ In this section, we will be using the terminal to create two plain text files in
 - We will create a "hw-key" as our private key
 - And we will create "hw-key.pub" as our public key
 
-1. Enter the following code into your Terminal window and change the appropriate information:
+1. Copy then run the following code and after changing the appropriate information:
 
 ```bash
-`ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"`
+ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 ```
 
 ###### NOTE: You will need to change *"youremail@email.com"* to your actual information.
@@ -41,7 +40,7 @@ In this section, we will be using the terminal to create two plain text files in
 ![Image of the SSH key making confirmation](/Assets/Images/SSH_key_make.png)
 
 ***
-### How to Install Doctl
+## How to Install Doctl
 
 `doctl` is the official DigitalOcean command line interface (CLI) and it allows you to interact with the DigitalOcean API via the command line.
 
@@ -51,26 +50,28 @@ This section will teach you how to:
 * Activate the API token
 * Validate doctl
 
-#### Install Doctl
+### Install Doctl
 
-1. Copy and run the following code in your terminal to download doctl
+1. Copy and run the following code to download doctl
 
 ```bash
 sudo pacman -S doctl
 ```
 
-#### Create an API Token
+### Create an API Token
 
-This step will be done on [DigitalOcean](https://www.digitalocean.com/) to create a new API token for your account with read and write access. 
+This step will be done on [DigitalOcean](https://www.digitalocean.com/) to create a new API token for your account. An API token is a unique identifier used to authenticate and authorize requests to an Application Programming Interface (API). It acts as a digital key that allows applications, scripts, or users to interact with an API securely without needing to provide credentials like usernames and passwords directly.
 
-###### NOTE: The API token string is only displayed once, so be sure to save it in a safe place.
+It's important that the API token has both read and write access. It needs write access to be able to create your droplet, otherwise it would only be able to gather information. 
 
-1. Click **API** in the left menu
-2. Click the **Generate New Token** button.
+##### NOTE: The API token string is only displayed once, so be sure to save it in a safe place for late use
+
+1. Click **API** on the left side menu
+2. Click the **Generate New Token**
 
 A New Personal Access Token page will appear and you will need to fill out the following fields:
 
-API_SETTINGS IMAGE HERE
+![Image of the API settings](/Assets/Images/api_settings.png)
 
 1. Type a name for the token
 2. Choose when the token expires
@@ -78,16 +79,16 @@ API_SETTINGS IMAGE HERE
 4. Click **Generate Token**
 5. Save your API token somewhere safe for later use
 
-#### Use the API Token to Grant Account Access to Doctl
+### Use the API Token to Grant Account Access to Doctl
 
-1. Copy and run the following code in your terminal to connect your API token
+1. Copy and run the following code to connect your API token
 ###### NOTE: Be sure to give this authentication a name by changing "NAME"
 
 ```bash 
 doctl auth init --context NAME
 ```
 
-1. Pass in the API token string when prompted by `doctl auth init`
+1. Enter in the API token string (the one you made earlier) when prompted by `doctl auth init`
 2. Copy and run the following code to switch to the correct authenticated account
 ###### NOTE: Change "NAME" to the name of the account you want to switch to that appears after `doctl auth list`
 
@@ -96,7 +97,7 @@ doctl auth list
 doctl auth switch --context NAME
 ```
 
-#### Validate that doctl is working
+### Validate that doctl is working
 
 1. Copy and run the following code to confirm you have successfully authorized doctl
 
@@ -109,19 +110,19 @@ doctl account get
 ![Image of doctl validation confirmation](/Assets/Images/doctl_validate.png)
 
 ***
-### How to add your public key to your DigitalOcean account
+## How to add your public key to your DigitalOcean account
 
-Once you've created your SSH keys, you will need to add it to our DigitalOcean account using doctl to use for our droplet. You will be using terminal commands to add your new public key text file.
+You will now add your SSH keys to your DigitalOcean account using doctl. You will be using terminal commands to add your new public key text file.
 
 1. Copy and run the following code to upload your public key to your DigitalOcean account 
 
-###### Note: You will need to change "git-user" to your key name, "example-user" to your user, "git-user.pub" to your public key file name
+##### Note: You will need to change "git-user" to your desired key name and "hw-key.pub" to your public key file name
 
 ```bash
 doctl compute ssh-key import git-user --public-key-file ~/.ssh/hw-key.pub
 ```
 
-###### NOTE: A successful import will look like this:
+##### NOTE: A successful import will look like this:
 
 ![Image of the public key import to DigitalOcean](/Assets/Images/public_key_upload.png)
 
@@ -130,7 +131,7 @@ doctl compute ssh-key import git-user --public-key-file ~/.ssh/hw-key.pub
 ```bash 
 cat ~/.ssh/hw-key.pub
 ```
-### How to Create a Droplet on DigitalOcean
+## How to Create a Droplet on DigitalOcean
 
 This step will be creating our droplet on the [DigitalOcean](https://www.digitalocean.com/) website. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware. Each Droplet you create is a new server you can use, either standalone or as part of a larger, cloud-based infrastructure.
 
@@ -139,7 +140,7 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 * Upload an Arch Linux Image to DigitalOcean
 * Create a new Arch Linux Droplet
 
-#### Upload an image to DigitalOcean
+### Upload an image to DigitalOcean
 
 You will be uploading the provided Arch Linux image to Digital Ocean for your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. This disk image will be the basis for the droplet to be built with.
 
@@ -156,11 +157,13 @@ You can find the Arch Linux image in the Assets folder.
 1. Select **Arch Linux** in the Distribution dropdown menu
 2. Select **San Francisco 3** in the Choose a Datacenter Region Section 
 -  We choose San Francisco 3 as our data center in the example because it is the closest to our location
-1. Click **Upload Image** to finish
+3. Click **Upload Image** to finish
 
-#### Create a cloud-init file 
+### Setting up cloud-init  
 
-1. Copy and run the following code
+Cloud-init will allow us to set up a server with some initial configuration. 
+
+1. Copy and run the following code to create your cloud-config.yaml file
 
 ```bash
 nvim cloud-config.yaml
@@ -195,7 +198,8 @@ disable_root: true
 2. Change the information (at least the ssh-authorized-keys)
 3. Press "esc" key to exit inset mode
 4. Type `:` then `wq` and then press enter key to save and finish 
-#### Create a new Arch Linux Droplet
+
+### Create a new Arch Linux Droplet
 Back in your terminal, you will be running the following `doctl` command to create the Droplets. you may need to change 
 
 1. Copy and paste the following code into your terminal 
@@ -204,9 +208,9 @@ Back in your terminal, you will be running the following `doctl` command to crea
 doctl compute droplet create example-droplet --image 165084633 --size s-1vcpu-1gb-amd --region sfo3 --ssh-keys 43491384 --user-data-file ~/cloud-config.yaml 
 ```
 
-IMAGE OF COMPLETED DROPLET MAKE
+![Image of the completed droplet creation](/Assets/Images/complete_droplet_make.png)
 
-### How to connect to your droplet using SSH
+## How to connect to your droplet using SSH
 
 1. Open your Terminal
 2. Run the following code:
@@ -230,14 +234,10 @@ Host arch
 
 4. Copy the IP address of the droplet from DigitalOcean
 
-![Image of completed droplet](\Assets\Images\completed_droplet.png)
+![Image of completed droplet](/Assets/Images/completed_droplet.png)
 
 5. Change the **HostName** to the IP address of your droplet
 6. Save the Config file to finish
 
 
 You're now ready to connect to your droplet using SSH!
-
-
-CREATE FILE ON NVIM - nvim cloud-config.yaml
-SAVE FILE ON NVIM - :wq

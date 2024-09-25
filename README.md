@@ -211,6 +211,17 @@ Back in your terminal, you will be running the following `doctl` command to crea
 doctl compute droplet create example-droplet --image 165084633 --size s-1vcpu-1gb-amd --region sfo3 --ssh-keys 43491384 --user-data-file ~/cloud-config.yaml 
 ```
 
+Here is what each part of the command represents:
+
+* `doctl compute droplet create`: The command doctl requires to create Droplets.
+* `--image`: The OS image used to create the Droplet. For this example, the Droplet uses Arch Linux
+* `--size s-1vcpu-1gb`: The number of processors and the amount of RAM each Droplet has. In this case, each Droplet has one processor and 1 GB of RAM.
+* `--region sfo3`: The region to create the Droplets in. In this example, doctl deploys the Droplets into the San Francisco 3 datacenter region because it's the closest location.
+* `--ssh-keys`: The SSH keys to import into the Droplet from your DigitalOcean account. You can retrieve a list of available keys by running `doctl compute ssh-key list`
+* `--user-data-file <path-to-your-cloud-init-file>`: Specifies the path to your cloud-config.yaml file. For example, `~/cloud-config.yaml`. 
+
+#### Successful droplet creation looks like:
+
 ![Image of the completed droplet creation](/Assets/Images/complete_droplet_make.png)
 
 ## How to connect to your droplet using SSH

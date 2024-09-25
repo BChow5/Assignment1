@@ -22,8 +22,13 @@ In this guide, we'll walk through the process of creating a droplet on DigitalOc
     2. [Create an API token](#create-an-api-token)
     3. [Granting Account Access to Doctl with an API Token](#granting-account-access-to-doctl-with-an-api-token)
     4. [Validate That Doctl is Working](#validate-that-doctl-is-working)
-3. 
-
+3. [How to Add your Public Key to Your DigitalOcean Account](#How-to-add-your-public-key-to-your-DigitalOcean-account)
+4. [How to Create a Droplet on DigitalOcean](#How-to-Create-a-Droplet-on-DigitalOcean)
+    1. [Upload an Arch Linux Image to DigitalOcean](#Upload-an-Arch-Linux-Image-to-DigitalOcean)
+    2. [Setting up Cloud-Init](#Setting-up-cloud-init)
+    3. [Create a New Arch Linux Droplet](#Create-a-New-Arch-Linux-Droplet)  
+5. [How to Connect to Your Droplet Using SSH](#How-to-Connect-to-Your-Droplet-Using-SSH)
+6. [References](#References)
 
 
 ***
@@ -166,14 +171,15 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 #### This section will teach you how to:
 
 * Upload an Arch Linux Image to DigitalOcean
+* Setting up Cloud-Init
 * Create a new Arch Linux Droplet
 <br>
 
-### Upload an image to DigitalOcean
+### Upload an Arch Linux Image to DigitalOcean
 
-You will be uploading the provided Arch Linux image to Digital Ocean for your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. This disk image will be the basis for the droplet to be built with.
+You will be uploading an Arch Linux image to Digital Ocean for your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. This disk image will be the basis for the droplet to be built with.
 
-You can find the Arch Linux image in the Assets folder.
+You can download the Arch Linux image [here](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/).
 <br>
 
 1. Click the **Manage** dropdown menu in the left side menu 
@@ -190,7 +196,7 @@ You can find the Arch Linux image in the Assets folder.
 3. Click **Upload Image** to finish
 <br>
 
-### Setting up cloud-init  
+### Setting up Cloud-Init  
 
 Cloud-init will allow you to set up a server with some initial configuration. For the purpose of thise guide, we've created a template basis that you can use. The selected packages included in this cloud-init configuration are some examples of commonly used packages. 
 <br>
@@ -233,7 +239,7 @@ disable_root: true
 4. Type `:` then `wq` and then press enter key to save and finish 
 <br>
 
-### Create a new Arch Linux Droplet
+### Create a New Arch Linux Droplet
 Back in your terminal, you will be running the following `doctl` command to create the Droplets. you may need to change 
 
 1. Copy and paste the following code into your terminal 
@@ -257,7 +263,7 @@ Here is what each part of the command represents:
 
 <br>
 
-## How to connect to your droplet using SSH
+## How to Connect to Your Droplet Using SSH
 
 1. Open your Terminal
 2. Run the following code:
@@ -289,6 +295,7 @@ Host arch
 
 You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh user-name`
 <br>
+
 ## References
 
 DigitalOcean. (2024, September). _Droplets documentation_. DigitalOcean. [https://docs.digitalocean.com/products/droplets/](https://docs.digitalocean.com/products/droplets/)

@@ -2,16 +2,17 @@
 
 ## Introduction
 
- DigitalOcean is a cloud provider that offers the ability to deploy virtual servers known as Droplets. When creating a Droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
+ DigitalOcean is a cloud provider that offers the ability to deploy virtual servers known as *droplets*. When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
  
-Cloud-init is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use cloud-init to inject a file into your Droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add an SSH key to your account and deploy the Droplets with the cloud-init file.
+*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use cloud-init to inject a file into your droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add an SSH key to your account and deploy the droplets with the cloud-init file.
 
-In this guide, we'll walk through the process of creating a Droplet on DigitalOcean using Cloud-Init on Windows, ensuring a smooth and automated setup for your virtual servers!
+In this guide, we'll walk through the process of creating a droplet on DigitalOcean using cloud-Init on Arch Linux, ensuring a smooth and automated setup for your virtual servers!
 
 ### Prerequisites 
 - A computer running Arch Linux 
 - The Arch Linux image provided in the Assets folder
 - All code provided should be run through the Terminal
+<br>
 
 ***
 
@@ -33,9 +34,9 @@ In this section, we will be using the terminal to create two plain text files in
 ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 ```
 
-###### NOTE: You will need to change *"youremail@email.com"* to your actual information.
+#### NOTE: You will need to change *"youremail@email.com"* to your actual information.
 
-###### Successful key creation will look something like this:
+#### Successful key creation will look something like this:
 
 ![Image of the SSH key making confirmation](/Assets/Images/SSH_key_make.png)
 
@@ -44,11 +45,12 @@ ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 
 `doctl` is the official DigitalOcean command line interface (CLI) and it allows you to interact with the DigitalOcean API via the command line.
 
-This section will teach you how to:
+#### This section will teach you how to:
 * Install doctl
 * Create an API token
 * Activate the API token
 * Validate doctl
+<br>
 
 ### Install Doctl
 
@@ -57,6 +59,7 @@ This section will teach you how to:
 ```bash
 sudo pacman -S doctl
 ```
+<br>
 
 ### Create an API Token
 
@@ -78,6 +81,7 @@ A New Personal Access Token page will appear and you will need to fill out the 
 3. Select **Full Access** (this will give the API token both read and write access)
 4. Click **Generate Token**
 5. Save your API token somewhere safe for later use
+<br>
 
 ### Use the API Token to Grant Account Access to Doctl
 
@@ -89,7 +93,7 @@ A New Personal Access Token page will appear and you will need to fill out the 
 doctl auth init --context NAME
 ```
 
-1. Enter in the API token string (the one you made earlier) when prompted by `doctl auth init`
+2. Enter in the API token string (the one you made earlier) when prompted by `doctl auth init`
 2. Copy and run the following code to switch to the correct authenticated account
 
 #### NOTE: Change "NAME" to the name of the account you want to switch to that appears after `doctl auth list`
@@ -98,6 +102,7 @@ doctl auth init --context NAME
 doctl auth list
 doctl auth switch --context NAME
 ```
+<br>
 
 ### Validate that doctl is working
 
@@ -111,7 +116,10 @@ doctl account get
 
 ![Image of doctl validation confirmation](/Assets/Images/doctl_validate.png)
 
+<br>
+
 ***
+
 ## How to add your public key to your DigitalOcean account
 
 You will now add your SSH keys to your DigitalOcean account using doctl. You will be using terminal commands to add your new public key text file.
@@ -133,6 +141,8 @@ doctl compute ssh-key import git-user --public-key-file ~/.ssh/hw-key.pub
 ```bash 
 cat ~/.ssh/hw-key.pub
 ```
+<br>
+
 ## How to Create a Droplet on DigitalOcean
 
 This step will be creating our droplet on the [DigitalOcean](https://www.digitalocean.com/) website. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware. Each Droplet you create is a new server you can use, either standalone or as part of a larger, cloud-based infrastructure.
@@ -141,6 +151,7 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 
 * Upload an Arch Linux Image to DigitalOcean
 * Create a new Arch Linux Droplet
+<br>
 
 ### Upload an image to DigitalOcean
 
@@ -160,6 +171,7 @@ You can find the Arch Linux image in the Assets folder.
 2. Select **San Francisco 3** in the Choose a Datacenter Region Section 
 	-  We choose San Francisco 3 as our data center in the example because it is the closest to our location
 3. Click **Upload Image** to finish
+<br>
 
 ### Setting up cloud-init  
 
@@ -201,6 +213,7 @@ disable_root: true
 1. Change the information (at least the ssh-authorized-keys)
 3. Press "esc" key to exit inset mode
 4. Type `:` then `wq` and then press enter key to save and finish 
+<br>
 
 ### Create a new Arch Linux Droplet
 Back in your terminal, you will be running the following `doctl` command to create the Droplets. you may need to change 
@@ -223,6 +236,8 @@ Here is what each part of the command represents:
 #### Successful droplet creation looks like:
 
 ![Image of the completed droplet creation](/Assets/Images/complete_droplet_make.png)
+
+<br>
 
 ## How to connect to your droplet using SSH
 
@@ -255,4 +270,18 @@ Host arch
 
 
 You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh user-name`
+<br>
+## References
+
+DigitalOcean. (2024, September). _Droplets documentation_. DigitalOcean. [https://docs.digitalocean.com/products/droplets/](https://docs.digitalocean.com/products/droplets/)
+
+DigitalOcean. (2022, September). _Automate Droplet setup with cloud-init_. DigitalOcean. [https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/](https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/)
+
+DigitalOcean. (2020, April). _Install doctl: The DigitalOcean command-line client_. DigitalOcean. [https://docs.digitalocean.com/reference/doctl/how-to/install/](https://docs.digitalocean.com/reference/doctl/how-to/install/)
+
+DigitalOcean. (2024, August). _Create a personal access token_. DigitalOcean. [https://docs.digitalocean.com/reference/api/create-personal-access-token/](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
+
+Cloud-init. (n.d.). _Introduction to cloud-init_. Cloud-init. [https://docs.cloud-init.io/en/latest/explanation/introduction.html](https://docs.cloud-init.io/en/latest/explanation/introduction.html)
+
+Cloudflare. (n.d.). _What is SSH?_. Cloudflare. [https://www.cloudflare.com/learning/access-management/what-is-ssh/](https://www.cloudflare.com/learning/access-management/what-is-ssh/)
 

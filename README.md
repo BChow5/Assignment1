@@ -2,11 +2,11 @@
 
 ## Introduction
 
+In this guide, we'll walk through the process of creating a Arch Linux droplet on DigitalOcean using cloud-Init. Ensuring a smooth and automated setup for your virtual servers!
+
  DigitalOcean is a cloud provider that offers the ability to deploy virtual servers known as *droplets*. When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
  
 *Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use cloud-init to inject a file into your droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add an SSH key to your account and deploy the droplets with the cloud-init file.
-
-In this guide, we'll walk through the process of creating a droplet on DigitalOcean using cloud-Init on Arch Linux, ensuring a smooth and automated setup for your virtual servers!
 
 ### Prerequisites 
 - A computer running Arch Linux 
@@ -52,9 +52,17 @@ In this section, we will be using the terminal to create two plain text files in
 ```bash
 ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 ```
-
 #### NOTE: You will need to change *"youremail@email.com"* to your actual information.
+
 <br>
+
+What does this code mean?
+* `ssh-keygen`: Code to generate the a public and private key pair
+* `-t`: Type of encryption for the key
+* `-f`: Specifying filename and location
+* `-C`: To add a comment
+<br>
+
 
 #### Successful key creation will look something like this:
 
@@ -80,6 +88,13 @@ ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 ```bash
 sudo pacman -S doctl
 ```
+<br>
+
+What does this code mean?
+* `sudo`: Allows a user to execute a command as the root user
+* `pacman`: The package manager for Arch Linux
+* `-S`: It stands for synchronize and is used install or update packages from official repositories
+
 <br>
 
 ### Create an API Token
@@ -113,6 +128,13 @@ A New Personal Access Token page will appear and you will need to fill out the 
 ```bash 
 doctl auth init --context NAME
 ```
+<br>
+
+What does this code mean?
+* `auth`: Subcommand used to manage authentication with DigitalOcean
+* `init`: Initializes the authentication process by prompting you to enter a DigitalOcean API token
+* `--context`: An optional flag that allows you to save the authentication settings under a specific context name
+<br>
 
 2. Enter in the API token string (the one you made earlier) when prompted by `doctl auth init`
 2. Copy and run the following code to switch to the correct authenticated account
@@ -125,6 +147,11 @@ doctl auth switch --context NAME
 ```
 <br>
 
+What does this code mean?
+* `list`: Displays a list of all the saved authentication contexts
+* `switch`: Switch between different authentication contexts
+<br>
+
 ### Validate that doctl is working
 
 1. Copy and run the following code to confirm you have successfully authorized doctl
@@ -132,6 +159,12 @@ doctl auth switch --context NAME
 ```bash 
 doctl account get
 ```
+<br>
+
+What does this code mean?
+* `account`: Allows you to manage or retrieve information about the account
+* `get`: Retrieves information about the currently authenticated account
+<br>
 
 #### Successful output looks like this:
 
@@ -147,11 +180,18 @@ You will now add your SSH keys to your DigitalOcean account using doctl. You wil
 
 1. Copy and run the following code to upload your public key to your DigitalOcean account 
 
-#### Note: You will need to change "git-user" to your desired key name and "hw-key.pub" to your public key file name
+#### Note: You will need to change "git-user" to your desired key name and "~/.ssh/hw-key.pub" to your public key file location
 
 ```bash
 doctl compute ssh-key import git-user --public-key-file ~/.ssh/hw-key.pub
 ```
+<br>
+
+What does this code mean?
+* `compute`: Subcommand for managing DigitalOcean Droplets and other compute-related resources
+* `import`: To import our SSH key
+* `--public-key-file`: Specifies the location of the public key file
+<br>
 
 #### NOTE: A successful import will look like this:
 

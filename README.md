@@ -234,7 +234,7 @@ You can download the Arch Linux image [here](https://gitlab.archlinux.org/archli
 
 #### NOTE: After clicking upload, a new settings box will open and you will need to select the following settings
 
-1. Select **Arch Linux** in the Distribution dropdown menu
+6. Select **Arch Linux** in the Distribution dropdown menu
 2. Select **San Francisco 3** in the Choose a Datacenter Region Section 
 	-  We choose San Francisco 3 as our data center in the example because it is the closest to our location
 3. Click **Upload Image** to finish

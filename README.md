@@ -77,7 +77,7 @@ What does this code mean?
 #### This section will teach you how to:
 * Install doctl
 * Create an API token
-* Grating Account Access to Doctl with an API Token
+* Grant Account Access to Doctl with an API Token
 * Validate That Doctl is Working
 <br>
 
@@ -131,9 +131,9 @@ doctl auth init --context NAME
 <br>
 
 What does this code mean?
-* `auth`: Subcommand used to manage authentication with DigitalOcean
+* `auth`: Used to manage authentication with DigitalOcean
 * `init`: Initializes the authentication process by prompting you to enter a DigitalOcean API token
-* `--context`: An optional flag that allows you to save the authentication settings under a specific context name
+* `--context`: Allows you to save the authentication settings under a specific context name
 <br>
 
 2. Enter in the API token string (the one you made earlier) when prompted by `doctl auth init`
@@ -148,8 +148,8 @@ doctl auth switch --context NAME
 <br>
 
 What does this code mean?
-* `list`: Displays a list of all the saved authentication contexts
-* `switch`: Switch between different authentication contexts
+* `list`: Displays a list of all the saved authentications
+* `switch`: Switch between different authentications
 <br>
 
 ### Validate that doctl is working
@@ -204,6 +204,10 @@ cat ~/.ssh/hw-key.pub
 ```
 <br>
 
+What does this code mean?
+* `cat`: Short for concatenate. It is used to read and output the contents of a file to the terminal
+<br>
+
 ## How to Create a Droplet on DigitalOcean
 
 This step will be creating our droplet on the [DigitalOcean](https://www.digitalocean.com/) website. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware. Each Droplet you create is a new server you can use, either standalone or as part of a larger, cloud-based infrastructure.
@@ -211,7 +215,7 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 #### This section will teach you how to:
 
 * Upload an Arch Linux Image to DigitalOcean
-* Setting up Cloud-Init
+* Set up Cloud-Init
 * Create a new Arch Linux Droplet
 <br>
 
@@ -226,7 +230,7 @@ You can download the Arch Linux image [here](https://gitlab.archlinux.org/archli
 2. Select **Backups & Snapshots**
 3. Select **Custom Images**
 4. Click the blue **Upload Image** button.
-5. Upload the Arch Linux image in the provided Assets folder
+5. Upload the Arch Linux image
 
 #### NOTE: After clicking upload, a new settings box will open and you will need to select the following settings
 
@@ -287,21 +291,25 @@ Back in your terminal, you will be running the following `doctl` command to crea
 ```bash 
 doctl compute droplet create --image 165084633 --size s-1vcpu-1gb-amd --region sfo3 --ssh-keys 43491384 --user-data-file ~/cloud-config.yaml --wait exampleDroplet
 ```
+<br>
 
-Here is what each part of the command represents:
+What does this code mean?
 
 * `doctl compute droplet create`: The command doctl requires to create Droplets.
 * `--image`: The OS image used to create the Droplet. For this example, the Droplet uses Arch Linux
-* `--size s-1vcpu-1gb`: The number of processors and the amount of RAM each Droplet has. In this case, each Droplet has one processor and 1 GB of RAM.
-* `--region sfo3`: The region to create the Droplets in. In this example, doctl deploys the Droplets into the San Francisco 3 datacenter region because it's the closest location.
+* `--size s-1vcpu-1gb`: The number of processors and the amount of RAM each Droplet has. In this case, each Droplet has one processor and 1 GB of RAM. The example chooses a low amount but you will want to choose an appropriate amount based on what you'll be doing with the droplet. 
+* `--region sfo3`: The region to create the Droplets in. In this example, doctl deploys the Droplets into the San Francisco 3 datacenter region because it's the closest location. Choose your data center for whichever is the closest location.
 * `--ssh-keys`: The SSH keys to import into the Droplet from your DigitalOcean account. You can retrieve a list of available keys by running `doctl compute ssh-key list`
 * `--user-data-file <path-to-your-cloud-init-file>`: Specifies the path to your cloud-config.yaml file. For example, `~/cloud-config.yaml`. 
+<br>
 
 #### Successful droplet creation looks like:
 
 ![Image of the completed droplet creation](/Assets/Images/complete_droplet_make.png)
 
 <br>
+
+***
 
 ## How to Connect to Your Droplet Using SSH
 
@@ -322,6 +330,18 @@ Host arch
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 ```
+<br>
+
+What does this code mean?
+* `Host`: The host alias you use when you run the SSH command
+* `HostName`: The IP address of the droplet you're connecting to
+* `User`: The username to be used when connecting to the remote host
+* `PreferredAuthentications publickey`: Specifies that you should use public key authentication to login
+* `IdentityFile`: The path to the private SSH key on your local machine
+* `StrictHostKeyChecking no`: Disables host key checking
+* `UserKnownHostsFile`: Tells SSH not to store the server's host key in the known hosts file
+<br>
+
 
 4. Copy the IP address of the droplet from DigitalOcean
 
@@ -331,7 +351,7 @@ Host arch
 6. Save the Config file to finish
 
 
-You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh user-name`
+You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh arch`
 <br>
 
 ## References

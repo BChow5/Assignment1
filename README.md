@@ -2,16 +2,16 @@
 
 ## Introduction
 
-In this guide, we'll walk through the process of creating a Arch Linux droplet on DigitalOcean using cloud-Init. Ensuring a smooth and automated setup for your virtual servers!
+In this guide, we'll walk through the process of creating a Arch Linux droplet on DigitalOcean using cloud-Init. Ensuring a smooth and automated setup for your virtual servers! During this process, you will learn how to use doctl, SSH keys, API tokens, and cloud-init.
 
- DigitalOcean is a cloud provider that offers the ability to deploy virtual servers known as *droplets*. When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
+ DigitalOcean is a cloud provider that offers the ability to deploy virtual servers, known as *droplets*, and other cloud-based resources like databases, storage, and networking tools. When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
  
-*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use cloud-init to inject a file into your droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add an SSH key to your account and deploy the droplets with the cloud-init file.
+*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use cloud-init to inject a file into your droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add a cloud-init file with information on users, programs, and your SSH key.
 
 ### Prerequisites 
 - A computer running Arch Linux 
 - Neovim installed on your system
-- The Arch Linux image provided in the Assets folder
+- The Arch Linux disk image
 - All code provided should be run through the Terminal
 <br>
 
@@ -57,7 +57,7 @@ ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 <br>
 
 What does this code mean?
-* `ssh-keygen`: Code to generate the a public and private key pair
+* `ssh-keygen`: Generates the public and private key pair
 * `-t`: Type of encryption for the key
 * `-f`: Specifying filename and location
 * `-C`: To add a comment
@@ -70,6 +70,7 @@ What does this code mean?
 <br> 
 
 ***
+
 ## How to Install Doctl
 
 `doctl` is the official DigitalOcean command line interface (CLI) and it allows you to interact with the DigitalOcean API via the command line.

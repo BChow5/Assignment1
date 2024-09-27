@@ -201,6 +201,14 @@ What does this code mean?
 2. Copy and run the following code to verify a successful import 
 
 ```bash 
+doctl compute ssh-key list
+```
+* `list`: Display a list
+<br>
+
+If you need to get the contents of your public key, you can run the following code:
+
+```bash 
 cat ~/.ssh/hw-key.pub
 ```
 <br>

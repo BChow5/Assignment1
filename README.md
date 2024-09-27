@@ -6,7 +6,7 @@ In this guide, we'll walk through the process of creating a Arch Linux droplet o
 
  DigitalOcean is a cloud provider that offers the ability to deploy virtual servers, known as *droplets*, and other cloud-based resources like databases, storage, and networking tools. When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
  
-*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use cloud-init to inject a file into your droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add a cloud-init file with information on users, programs, and your SSH key.
+*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use a cloud-init file to configure droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add a cloud-init file with information on users, programs, and your SSH key.
 
 ### Prerequisites 
 - A computer running Arch Linux 
@@ -113,7 +113,7 @@ A New Personal Access Token page will appear and you will need to fill out the 
 
 ![Image of the API settings](/Assets/Images/api_settings.png)
 
-1. Type a name for the token
+3. Type a name for the token
 2. Choose when the token expires
 3. Select **Full Access** (this will give the API token both read and write access)
 4. Click **Generate Token**
@@ -211,7 +211,7 @@ What does this code mean?
 
 ## How to Create a Droplet on DigitalOcean
 
-This step will be creating our droplet on the [DigitalOcean](https://www.digitalocean.com/) website. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware. Each Droplet you create is a new server you can use, either standalone or as part of a larger, cloud-based infrastructure.
+This step will teach about creating your droplet on the DigitalOcean using doctl. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware.
 
 #### This section will teach you how to:
 
@@ -222,7 +222,7 @@ This step will be creating our droplet on the [DigitalOcean](https://www.digital
 
 ### Upload an Arch Linux Image to DigitalOcean
 
-You will be uploading an Arch Linux image to Digital Ocean for your droplet. The disk image provided is a file that contains an exact copy of the data and structure of a physical disk drive. It's essentially a snapshot of the disk that contains information on everything from the files and folders to the operating system and boot information. This disk image will be the basis for the droplet to be built with.
+You will be uploading an Arch Linux image on the [DigitalOcean](https://www.digitalocean.com/) website for your droplet. It's essentially a snapshot that contains information on everything from the files and folders to the operating system and boot information. This image will be the basis for the droplet to be built with.
 
 You can download the Arch Linux image [here](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/).
 <br>
@@ -243,7 +243,7 @@ You can download the Arch Linux image [here](https://gitlab.archlinux.org/archli
 
 ### Setting up Cloud-Init  
 
-Cloud-init will allow you to set up a server with some initial configuration. For the purpose of thise guide, we've created a template basis that you can use. The selected packages included in this cloud-init configuration are some examples of commonly used packages. 
+Cloud-init will allow you to set up a server with some initial configurations. For this guide, the example includes packages in the cloud-init configuration that are some examples of commonly used packages. 
 <br>
 
 1. Copy and run the following code to create your cloud-config.yaml file

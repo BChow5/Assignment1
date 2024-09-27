@@ -217,6 +217,8 @@ What does this code mean?
 * `cat`: Short for concatenate. It is used to read and output the contents of a file to the terminal
 <br>
 
+***
+
 ## How to Create a Droplet on DigitalOcean
 
 This step will teach about creating your droplet on the DigitalOcean using doctl. Droplets are Linux-based virtual machines (VMs) that run on top of virtualized hardware.
@@ -316,7 +318,7 @@ What does this code mean?
 
 ![Image of the completed droplet creation](/Assets/Images/complete_droplet_make.png)
 
-<br>
+
 
 ***
 

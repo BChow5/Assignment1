@@ -4,9 +4,9 @@
 
 In this guide, we'll walk through the process of creating a Arch Linux droplet on DigitalOcean using cloud-Init. Ensuring a smooth and automated setup for your virtual servers! During this process, you will learn how to use doctl, SSH keys, API tokens, and cloud-init.
 
- DigitalOcean is a cloud provider that offers the ability to deploy virtual servers, known as *droplets*, and other cloud-based resources like databases, storage, and networking tools. When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
+ DigitalOcean is a cloud provider that offers the ability to deploy virtual servers, known as *droplets*, and other cloud-based resources like databases, storage, and networking tools (DigitalOcean, 2024). When creating a droplet, we can automate the setup process to save time and create servers with consistent repeatable configurations using Cloud-Init. 
  
-*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use a cloud-init file to configure droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys. This tutorial uses doctl to add a cloud-init file with information on users, programs, and your SSH key.
+*Cloud-init* is an industry standard tool that allows you to automate the initialization of your Linux instances. This means that you can use a cloud-init file to configure droplets at deployment that automatically sets up things like new users, firewall rules, app installations, and SSH keys (DigitalOcean, 2024). This tutorial uses doctl to add a cloud-init file with information on users, programs, and your SSH key.
 
 ### Prerequisites 
 - A computer running Arch Linux 
@@ -35,11 +35,9 @@ In this guide, we'll walk through the process of creating a Arch Linux droplet o
 
 ## How to Create an SSH Key pair
 
-For the initial set up, you will begin by creating a Secure Shell Protocol (SSH) key pair using our local machine. SSH (Secure Shell) key pairs are a more secure alternative to traditional password-based authentication by using Public Key Cryptography.
+For the initial set up, you will begin by creating a Secure Shell Protocol (SSH) key pair using our local machine. SSH (Secure Shell) key pairs are a more secure alternative to traditional password-based authentication by using Public Key Cryptography (DigitalOcean, 2024).
 
-Public Key Cryptography uses a key pair that consists of a public key (which you place on the server) and a private key (which you keep securely on your local machine). This file tells the server which public keys are allowed to access the account without a password. With SSH key authentication, there's no need to worry about using weak or compromised passwords. Once set up, you can connect to the Droplet without needing to type a password each time. Instead, your local machine automatically uses the private key to authenticate you.
-
-By default, you should already have the `ssh-keygen` util already installed on your MacOS or Windows machine.
+Public Key Cryptography uses a key pair that consists of a public key (which you place on the server) and a private key (which you keep securely on your local machine). This file tells the server which public keys are allowed to access the account without a password. With SSH key authentication, there's no need to worry about using weak or compromised passwords (DigitalOcean, 2024). Once set up, you can connect to the Droplet without needing to type a password each time. Instead, your local machine automatically uses the private key to authenticate you.
 
 In this section, we will be using the terminal to create two plain text files in the `.ssh` directory that will be our keys.
 - We will create a "hw-key" as our private key
@@ -57,7 +55,7 @@ ssh-keygen -t ed25519 -f ~/.ssh/hw-key -C "youremail@email.com"
 <br>
 
 What does this code mean?
-* `ssh-keygen`: Generates the public and private key pair
+* `ssh-keygen`: Generates the public and private key pair (DigitalOcean, 2024)
 * `-t`: Type of encryption for the key
 * `-f`: Specifying filename and location
 * `-C`: To add a comment
@@ -73,7 +71,7 @@ What does this code mean?
 
 ## How to Install Doctl
 
-`doctl` is the official DigitalOcean command line interface (CLI) and it allows you to interact with the DigitalOcean API via the command line.
+`doctl` is the official DigitalOcean command line interface (CLI) and it allows you to interact with the DigitalOcean API via the command line (DigitalOcean, 2020).
 
 #### This section will teach you how to:
 * Install doctl
@@ -93,14 +91,14 @@ sudo pacman -S doctl
 
 What does this code mean?
 * `sudo`: Allows a user to execute a command as the root user
-* `pacman`: The package manager for Arch Linux
+* `pacman`: The package manager for Arch Linux (Arch Linux, n.d.)
 * `-S`: It stands for synchronize and is used install or update packages from official repositories
 
 <br>
 
 ### Create an API Token
 
-This step will be done on [DigitalOcean](https://www.digitalocean.com/) to create a new API token for your account. An API token is a unique identifier used to authenticate and authorize requests to an Application Programming Interface (API). It acts as a digital key that allows applications, scripts, or users to interact with an API securely without needing to provide credentials like usernames and passwords directly.
+This step will be done on [DigitalOcean](https://www.digitalocean.com/) to create a new API token for your account. An API token is a unique identifier used to authenticate and authorize requests to an Application Programming Interface (API). It acts as a digital key that allows applications, scripts, or users to interact with an API securely without needing to provide credentials like usernames and passwords directly (DigitalOcean, 2024).
 
 It's important that the API token has both read and write access. It needs write access to be able to create your droplet, otherwise it would only be able to gather information. 
 
@@ -133,7 +131,7 @@ doctl auth init --context NAME
 
 What does this code mean?
 * `auth`: Used to manage authentication with DigitalOcean
-* `init`: Initializes the authentication process by prompting you to enter a DigitalOcean API token
+* `init`: Initializes the authentication process by prompting you to enter a DigitalOcean API token (DigitalOcean, 2024)
 * `--context`: Allows you to save the authentication settings under a specific context name
 <br>
 
@@ -191,7 +189,7 @@ doctl compute ssh-key import git-user --public-key-file ~/.ssh/hw-key.pub
 What does this code mean?
 * `compute`: Subcommand for managing DigitalOcean Droplets and other compute-related resources
 * `import`: To import our SSH key
-* `--public-key-file`: Specifies the location of the public key file
+* `--public-key-file`: Specifies the location of the public key file (DigitalOcean, 2024)
 <br>
 
 #### NOTE: A successful import will look like this:
@@ -253,7 +251,7 @@ You can download the Arch Linux image [here](https://gitlab.archlinux.org/archli
 
 ### Setting up Cloud-Init  
 
-Cloud-init will allow you to set up a server with some initial configurations. For this guide, the example includes packages in the cloud-init configuration that are some examples of commonly used packages. 
+Cloud-init will allow you to set up a server with some initial configurations. For this guide, the example includes packages in the cloud-init configuration that are some examples of commonly used packages (DigitalOcean, 2022). 
 <br>
 
 1. Copy and run the following code to create your cloud-config.yaml file
@@ -287,6 +285,13 @@ packages:
   - tmux
 disable_root: true
 ```
+
+What does this code mean?
+* `shell: /bin/bash`: Sets the default shell to bash/bin
+* `sudo: ['ALL=(ALL) NOPASSWD:ALL']`: Grants the user full sudo privileges without needing to enter a password
+* `ssh-authorized-keys`: Allows the user to log in via SSH using public key authentication (DigitalOcean, 2014)
+* `disable_root: true:`: Disables root login for the server (DigitalOcean, 2014)
+
 
 3. Press the "i" key after pasting the text to enter insert mode to edit the file contents
 1. Change the information (at least the ssh-authorized-keys)
@@ -367,16 +372,24 @@ You're now ready to connect to your droplet using SSH! You can now connect to yo
 
 ## References
 
-DigitalOcean. (2024, September). _Droplets documentation_. DigitalOcean. [https://docs.digitalocean.com/products/droplets/](https://docs.digitalocean.com/products/droplets/)
+DigitalOcean. (2024, September). Droplets documentation. DigitalOcean. https://docs.digitalocean.com/products/droplets/
 
-DigitalOcean. (2022, September). _Automate Droplet setup with cloud-init_. DigitalOcean. [https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/](https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/)
+DigitalOcean. (2022, September). Automate Droplet setup with cloud-init. DigitalOcean. https://docs.digitalocean.com/products/droplets/how-to/automate-setup-with-cloud-init/
 
-DigitalOcean. (2020, April). _Install doctl: The DigitalOcean command-line client_. DigitalOcean. [https://docs.digitalocean.com/reference/doctl/how-to/install/](https://docs.digitalocean.com/reference/doctl/how-to/install/)
+DigitalOcean. (2020, April). Install doctl: The DigitalOcean command-line client. DigitalOcean. https://docs.digitalocean.com/reference/doctl/how-to/install/
 
-DigitalOcean. (2024, August). _Create a personal access token_. DigitalOcean. [https://docs.digitalocean.com/reference/api/create-personal-access-token/](https://docs.digitalocean.com/reference/api/create-personal-access-token/)
+DigitalOcean. (2024, August). Create a personal access token. DigitalOcean. https://docs.digitalocean.com/reference/api/create-personal-access-token/
 
-Cloud-init. (n.d.). _Introduction to cloud-init_. Cloud-init. [https://docs.cloud-init.io/en/latest/explanation/introduction.html](https://docs.cloud-init.io/en/latest/explanation/introduction.html)
+Cloud-init. (n.d.). Introduction to cloud-init. Cloud-init. https://docs.cloud-init.io/en/latest/explanation/introduction.html
 
-Cloudflare. (n.d.). _What is SSH?_. Cloudflare. [https://www.cloudflare.com/learning/access-management/what-is-ssh/](https://www.cloudflare.com/learning/access-management/what-is-ssh/)
+Cloudflare. (n.d.). What is SSH?. Cloudflare. https://www.cloudflare.com/learning/access-management/what-is-ssh/
 
-DigitalOcean. (n.d.). DigitalOcean API slugs reference. DigitalOcean. https://slugs.do-api.dev/
+DigitalOcean. (n.d.). Droplet list using doctl reference. DigitalOcean. https://docs.digitalocean.com/reference/doctl/reference/compute/droplet/list/
+
+DigitalOcean. (2014, October). How to use cloud-config for your initial server setup. DigitalOcean. https://www.digitalocean.com/community/tutorials/how-to-use-cloud-config-for-your-initial-server-setup
+
+DigitalOcean. (2024, April). SSH essentials: Working with SSH servers, clients, and keys. DigitalOcean. https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
+
+Arch Linux. (n.d.). Cloud-init. Arch Linux. https://wiki.archlinux.org/title/Cloud-init
+
+Arch Linux. (n.d.). Pacman. Arch Linux. https://wiki.archlinux.org/title/Pacman

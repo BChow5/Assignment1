@@ -300,7 +300,8 @@ What does this code mean?
 <br>
 
 ### Create a New Arch Linux Droplet
-Back in your terminal, you will be running the following `doctl` command to create the Droplets. you may need to change 
+Back in your terminal, you will be running the following `doctl` command to create the Droplets.
+<br>
 
 1. Copy and paste the following code into your terminal 
 
@@ -311,12 +312,12 @@ doctl compute droplet create --image 165084633 --size s-1vcpu-1gb-amd --region s
 
 What does this code mean?
 
-* `doctl compute droplet create`: The command doctl requires to create Droplets.
+* `doctl compute droplet create`: The command doctl requires to create Droplets (DigitalOcean, 2024)
 * `--image`: The OS image used to create the Droplet. For this example, the Droplet uses Arch Linux
-* `--size s-1vcpu-1gb`: The number of processors and the amount of RAM each Droplet has. In this case, each Droplet has one processor and 1 GB of RAM. The example chooses a low amount but you will want to choose an appropriate amount based on what you'll be doing with the droplet. 
-* `--region sfo3`: The region to create the Droplets in. In this example, doctl deploys the Droplets into the San Francisco 3 datacenter region because it's the closest location. Choose your data center for whichever is the closest location.
+* `--size s-1vcpu-1gb`: The number of processors and the amount of RAM each Droplet has. In this case, each Droplet has one processor and 1 GB of RAM. The example chooses a low amount but you will want to choose an appropriate amount based on what you'll be doing with the droplet (do-api.dev, n.d.) 
+* `--region sfo3`: The region to create the Droplets in. In this example, doctl deploys the Droplets into the San Francisco 3 datacenter region because it's the closest location. Choose your data center for whichever is the closest location
 * `--ssh-keys`: The SSH keys to import into the Droplet from your DigitalOcean account. You can retrieve a list of available keys by running `doctl compute ssh-key list`
-* `--user-data-file <path-to-your-cloud-init-file>`: Specifies the path to your cloud-config.yaml file. For example, `~/cloud-config.yaml`. 
+* `--user-data-file <path-to-your-cloud-init-file>`: Specifies the path to your cloud-config.yaml file. For example, `~/cloud-config.yaml`. (DigitalOcean, 2024)
 <br>
 
 #### Successful droplet creation looks like:
@@ -367,7 +368,7 @@ What does this code mean?
 6. Save the Config file to finish
 
 
-You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh arch`
+You're now ready to connect to your droplet using SSH! You can now connect to your droplet by using `ssh arch`. This will depend on what you named your host in the previous steps.
 <br>
 
 ## References
@@ -393,3 +394,5 @@ DigitalOcean. (2024, April). SSH essentials: Working with SSH servers, clients, 
 Arch Linux. (n.d.). Cloud-init. Arch Linux. https://wiki.archlinux.org/title/Cloud-init
 
 Arch Linux. (n.d.). Pacman. Arch Linux. https://wiki.archlinux.org/title/Pacman
+
+do-api.dev. (n.d.). Slugs API documentation. https://slugs.do-api.dev/

@@ -230,7 +230,7 @@ This step will teach about creating your droplet on the DigitalOcean using doctl
 
 ### Upload an Arch Linux Image to DigitalOcean
 
-You will be uploading an Arch Linux image on the [DigitalOcean](https://www.digitalocean.com/) website for your droplet. It's essentially a snapshot that contains information on everything from the files and folders to the operating system and boot information. This image will be the basis for the droplet to be built with.
+You will be uploading an Arch Linux image on the [DigitalOcean](https://www.digitalocean.com/) website for your droplet. It's essentially a snapshot that contains information on everything from the files and folders to the operating system and boot information (DigitalOcean, 2024). This image will be the basis for the droplet to be built with.
 
 You can download the Arch Linux image [here](https://gitlab.archlinux.org/archlinux/arch-boxes/-/packages/).
 <br>
@@ -396,3 +396,7 @@ Arch Linux. (n.d.). Cloud-init. Arch Linux. https://wiki.archlinux.org/title/Clo
 Arch Linux. (n.d.). Pacman. Arch Linux. https://wiki.archlinux.org/title/Pacman
 
 do-api.dev. (n.d.). Slugs API documentation. https://slugs.do-api.dev/
+
+DigitalOcean. (2024, May). Custom images. DigitalOcean. https://docs.digitalocean.com/glossary/custom-images/
+
+Arch Linux. (n.d.). Arch manual pages. Arch Linux. https://man.archlinux.org/
